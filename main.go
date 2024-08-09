@@ -42,6 +42,24 @@ func run(args ...string) error {
 	baseName = baseName[:len(baseName)-len(filepath.Ext(baseName))]
 	outName := filepath.Join(dir, baseName+".pst")
 
+	/*
+		// Size: 142 bytes
+			0:
+
+			98, 98, 9A, 9C => 152, 152, 154, 156.
+
+			100c: C2, C2, C3, C4  => 194, 194, 195, 196.
+
+			101a // 4122: 8E, 8E, 8F, 90 => 142, 142, 143, 144
+
+			10ca // 4297: _, 99, 9A
+
+
+
+
+
+	*/
+
 	// Offsets
 	// Size: 142 bytes
 	// Content offsets:
@@ -74,9 +92,9 @@ func run(args ...string) error {
 	}
 	defer outFile.Close()
 
-	//lenb := len(b)
+	// lenb := len(b)
 
-	var contentPlaceholder = []byte("_SCRIPTER_SCRIPT_CONTENT")
+	contentPlaceholder := []byte("_SCRIPTER_SCRIPT_CONTENT")
 	patchContent := bytes.ReplaceAll(template, contentPlaceholder, b)
 
 	// Replace offsets.
