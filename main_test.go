@@ -6,10 +6,12 @@ import (
 	qt "github.com/frankban/quicktest"
 )
 
-func TestFoo(t *testing.T) {
+func TestRun(t *testing.T) {
 	t.Parallel()
 
 	c := qt.New(t)
 
-	c.Assert(true, qt.IsTrue)
+	testFile := "testdata/noprogramchange.js"
+
+	c.Assert(run(testFile), qt.IsNil)
 }
